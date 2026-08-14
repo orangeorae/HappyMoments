@@ -8,6 +8,11 @@
 /[Uu]ser[Ss]ettings/
 /[Mm]emory[Cc]aptures/
 
+###추가 제외###
+/[Aa]ssets/[Rr]esources/Image
+/[Aa]ssets/[Mm]odel/
+
+
 # AssetStore 패키지는 프로젝트에 포함되지만, UPM 캐시는 제외됩니다.
 /[Pp]ackages/*
 !/[Pp]ackages/manifest.json

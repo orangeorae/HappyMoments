@@ -10,7 +10,7 @@
 
 ###추가 제외###
 /[Aa]ssets/[Rr]esources/Image
-/[Aa]ssets/[Mm]odel/
+/[Aa]ssets/[Mm]odels/
 
 
 # AssetStore 패키지는 프로젝트에 포함되지만, UPM 캐시는 제외됩니다.

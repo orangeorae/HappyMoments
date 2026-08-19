@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1",
+    "Stage": "유년기",
+    "Tier": 1,
+    "ItemName": "낡은 젖병",
+    "Probability": 70,
+    "IconPath": "icon_bottle"
+  },
+  {
+    "Id": "2",
+    "Stage": "유년기",
+    "Tier": 2,
+    "ItemName": "아장아장 신발",
+    "Probability": 25,
+    "IconPath": "icon_shoes"
+  },
+  {
+    "Id": "3",
+    "Stage": "유년기",
+    "Tier": 3,
+    "ItemName": "상상속의 친구",
+    "Probability": 0,
+    "IconPath": "icon_friend"
+  },
+  {
+    "Id": "4",
+    "Stage": "유년기",
+    "Tier": 4,
+    "ItemName": "세발 자전거",
+    "Probability": 0,
+    "IconPath": "icon_bike"
+  },
+  {
+    "Id": "5",
+    "Stage": null,
+    "Tier": null,
+    "ItemName": null,
+    "Probability": null,
+    "IconPath": null
+  },
+  {
+    "Id": "6",
+    "Stage": null,
+    "Tier": null,
+    "ItemName": null,
+    "Probability": null,
+    "IconPath": null
+  },
+  {
+    "Id": "7",
+    "Stage": null,
+    "Tier": null,
+    "ItemName": null,
+    "Probability": null,
+    "IconPath": null
+  },
+  {
+    "Id": "8",
+    "Stage": null,
+    "Tier": null,
+    "ItemName": null,
+    "Probability": null,
+    "IconPath": null
+  },
+  {
+    "Id": "9",
+    "Stage": null,
+    "Tier": null,
+    "ItemName": null,
+    "Probability": null,
+    "IconPath": null
+  },
+  {
+    "Id": "10",
+    "Stage": null,
+    "Tier": null,
+    "ItemName": null,
+    "Probability": null,
+    "IconPath": null
+  }
+]

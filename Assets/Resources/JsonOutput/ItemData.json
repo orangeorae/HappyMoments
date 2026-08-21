@@ -2,33 +2,33 @@
   {
     "Id": "1",
     "Stage": "유년기",
-    "Tier": 1,
+    "Tier": "1",
     "ItemName": "낡은 젖병",
-    "Probability": 70,
+    "Probability": 700,
     "IconPath": "icon_bottle"
   },
   {
     "Id": "2",
     "Stage": "유년기",
-    "Tier": 2,
+    "Tier": "2",
     "ItemName": "아장아장 신발",
-    "Probability": 25,
+    "Probability": 250,
     "IconPath": "icon_shoes"
   },
   {
     "Id": "3",
     "Stage": "유년기",
-    "Tier": 3,
+    "Tier": "3",
     "ItemName": "상상속의 친구",
-    "Probability": 0,
+    "Probability": 45,
     "IconPath": "icon_friend"
   },
   {
     "Id": "4",
     "Stage": "유년기",
-    "Tier": 4,
+    "Tier": "4",
     "ItemName": "세발 자전거",
-    "Probability": 0,
+    "Probability": 5,
     "IconPath": "icon_bike"
   },
   {

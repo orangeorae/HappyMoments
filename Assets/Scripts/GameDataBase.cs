@@ -11,7 +11,7 @@ public class GameDataBase //JSON 기획 데이터 클래스의 최상위 부모 
 public class ItemData : GameDataBase //농작물 세부 기획 데이터 클래스
 {
     public int Stage;
-    public int Tier;
+    public string Tier;
     public string ItemName;
     public int Probability;
     public string IconPath;

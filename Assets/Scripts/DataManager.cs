@@ -71,4 +71,27 @@ public class DataManager : MonoBehaviour
 
         return ItemDataList.TryGetValue(id, out var data) ? data : null;
     }
+
+    //현제 스테이지 아이템들만 골라내기 위함 
+    public List<ItemData> GetItemByStage(int stage)
+    { 
+        List<ItemData> resultList = new List<ItemData>();
+
+        if(ItemDataList == null)
+        {
+            return resultList;
+        }
+
+        foreach(KeyValuePair<string, ItemData> pair in ItemDataList)
+        {
+            ItemData item = pair.Value;
+
+            if(item.Stage == stage)
+            {
+                resultList.Add(item);
+            }
+        }
+
+        return resultList;
+    }
 }

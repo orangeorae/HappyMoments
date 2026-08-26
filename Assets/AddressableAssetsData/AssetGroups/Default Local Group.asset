@@ -20,13 +20,33 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f2fa64a921ec1449b1fcc631eae78d3
+    m_Address: model_shoes
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5605dbf26f5c9994d911094d5fbbb632
-    m_Address: Assets/Resources_moved/Image/babyFriend.png
+    m_Address: icon_friend
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63edde87895db654a914615be68b2872
     m_Address: icon_bottle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6fe39b949b61f9e4198efea0c5cf7e2c
+    m_Address: model_bike
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91e642cc3801e1b42825a69061fa5a45
+    m_Address: model_bottle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd89c763ba0799749afc2c55f29ee995
+    m_Address: model_friend
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

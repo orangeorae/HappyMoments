@@ -5,7 +5,9 @@
     "Tier": "1",
     "ItemName": "낡은 젖병",
     "Probability": 700,
-    "IconPath": "icon_bottle"
+    "IconPath": "icon_bottle",
+    "ModelPath": "model_bottle",
+    "ModelScale": 0.05
   },
   {
     "Id": "2",
@@ -13,7 +15,9 @@
     "Tier": "2",
     "ItemName": "아장아장 신발",
     "Probability": 250,
-    "IconPath": "icon_shoes"
+    "IconPath": "icon_shoes",
+    "ModelPath": "model_shoes",
+    "ModelScale": 500
   },
   {
     "Id": "3",
@@ -21,7 +25,9 @@
     "Tier": "3",
     "ItemName": "상상속의 친구",
     "Probability": 45,
-    "IconPath": "icon_friend"
+    "IconPath": "icon_friend",
+    "ModelPath": "model_friend",
+    "ModelScale": 2
   },
   {
     "Id": "4",
@@ -29,7 +35,9 @@
     "Tier": "4",
     "ItemName": "세발 자전거",
     "Probability": 5,
-    "IconPath": "icon_bike"
+    "IconPath": "icon_bike",
+    "ModelPath": "model_bike",
+    "ModelScale": 1
   },
   {
     "Id": "5",
@@ -37,7 +45,9 @@
     "Tier": null,
     "ItemName": null,
     "Probability": null,
-    "IconPath": null
+    "IconPath": null,
+    "ModelPath": null,
+    "ModelScale": null
   },
   {
     "Id": "6",
@@ -45,7 +55,9 @@
     "Tier": null,
     "ItemName": null,
     "Probability": null,
-    "IconPath": null
+    "IconPath": null,
+    "ModelPath": null,
+    "ModelScale": null
   },
   {
     "Id": "7",
@@ -53,7 +65,9 @@
     "Tier": null,
     "ItemName": null,
     "Probability": null,
-    "IconPath": null
+    "IconPath": null,
+    "ModelPath": null,
+    "ModelScale": null
   },
   {
     "Id": "8",
@@ -61,7 +75,9 @@
     "Tier": null,
     "ItemName": null,
     "Probability": null,
-    "IconPath": null
+    "IconPath": null,
+    "ModelPath": null,
+    "ModelScale": null
   },
   {
     "Id": "9",
@@ -69,7 +85,9 @@
     "Tier": null,
     "ItemName": null,
     "Probability": null,
-    "IconPath": null
+    "IconPath": null,
+    "ModelPath": null,
+    "ModelScale": null
   },
   {
     "Id": "10",
@@ -77,6 +95,8 @@
     "Tier": null,
     "ItemName": null,
     "Probability": null,
-    "IconPath": null
+    "IconPath": null,
+    "ModelPath": null,
+    "ModelScale": null
   }
 ]

@@ -19,11 +19,16 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int spawnCost = 10; //소환 비용
     [SerializeField] private int currentMoney = 100; //임시로 관리 나중에 별도로 분리
 
+    [Header("필드 소환")]
+    [SerializeField] private SpawnModel spawnModel;  // 카드를 선택했을 때 실제 3D 모델을 배치해주는 스크립트
+
     //화면에 떠있는 카드 슬롯 저장리스트
     private List<SpawnCardSlot> slots = new List<SpawnCardSlot>(); 
 
     // 현재 시기에서 뽑힐 수 있는 아이템 목록 
     private List<ItemData> currentItems = new List<ItemData>();
+
+    private SpawnCardSlot selectSlot;
 
     private void OnEnable()
     {
@@ -33,6 +38,14 @@ public class SpawnManager : MonoBehaviour
     private void OnDisable()
     {
         Button_Spawn.onClick.RemoveAllListeners();
+
+        foreach (SpawnCardSlot slot in slots)
+        {
+            if(slot != null)
+            {
+                slot.OnCardSelect -= OnClick_CardSlot;
+            }
+        }
     }
 
 
@@ -58,6 +71,8 @@ public class SpawnManager : MonoBehaviour
             GameObject newSlot = Instantiate(cardSlotPrefab, slotContainer);
             SpawnCardSlot  cardSlot = newSlot.GetComponent<SpawnCardSlot>();
             slots.Add(cardSlot);
+
+            cardSlot.OnCardSelect += OnClick_CardSlot;
         }
     }
 
@@ -86,37 +101,53 @@ public class SpawnManager : MonoBehaviour
 
     private void OnClick_SpawnButton()
     {
+
+        if(selectSlot  == null)
+        {
+            Debug.Log("[SpawnManager] 먼저 소환할 카드를 선택해주세요");
+            return;
+        }
+
+        ItemData selectItem = selectSlot.CurrentItem;
+
+
         if(currentMoney < spawnCost)
         {
             Debug.Log("재화가 부족합니다.");
             return;
         }
+        
 
-        int  emptySlotIndex = EmptySlotIndex();
+        //3D 모델 소환
+        bool hasSpawn = spawnModel.SpawnItemModel(selectItem);
 
-        if(emptySlotIndex == -1)
+       if(hasSpawn == false)
         {
-            Debug.Log("빈 슬롯이 없습니다.");
+            Debug.Log("[SpawnManager] 소환 실패 / 기존 카드를 유지합니다.");
+            return;
+        }
+        currentMoney -= spawnCost;
+
+        ItemData newItem = GetRandomItem();
+
+        selectSlot.SetItem(newItem);
+
+        selectSlot = null;
+
+        Debug.Log($"[SpawnManager] {selectItem.ItemName} 소환 완료");
+
+        Debug.Log($"[SpawnManager] {currentMoney} 소환 완료");
+    }
+
+    private void OnClick_CardSlot(SpawnCardSlot clickSlot)
+    { 
+        if(clickSlot == null)
+        {
             return;
         }
 
-        ItemData randomItem = GetRandomItem(); //아이템 뽑기 
+        selectSlot = clickSlot;
 
-        SpawnCardSlot targetSlot = slots[emptySlotIndex]; // 찾은 인덱스의 슬롯 가져오기 
-        targetSlot.SetItem(randomItem); // 빈 슬롯에 랜덤 아이템 설정 
-
-        currentMoney -= spawnCost;
-    }
-
-    // 슬롯리스트에서 비어있는 슬롯 인덱스 찾기 
-    private int EmptySlotIndex()
-    {
-        for (int i = 0; i < slots.Count; i++) {
-            if(slots[i] != null && slots[i].IsEmpty)
-            {
-                return i;
-            }
-        }
-        return -1;
+        Debug.Log($"[SpawnManager] 카드 선택: {selectSlot.CurrentItem.ItemName}");
     }
 }

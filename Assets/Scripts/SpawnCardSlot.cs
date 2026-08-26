@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
@@ -9,10 +10,34 @@ public class SpawnCardSlot : MonoBehaviour
     public Text Text_Name;
     public Text Text_Tier;
 
+    [Header("카드 선택")]
+    [SerializeField] private Button Button_Select;
     public ItemData CurrentItem {  get; private set; }
     public bool IsEmpty //슬롯이 비어있는지 여부 알기 위함
     {
         get { return CurrentItem == null; }
+    }
+
+    public event Action<SpawnCardSlot> OnCardSelect; //카드 선택 시 발생 이벤트 
+
+    private void OnEnable()
+    {
+        Button_Select.onClick.AddListener(OnClick_Card);
+    }
+
+    private void OnDisable()
+    {
+        Button_Select.onClick.RemoveAllListeners();
+    }
+
+    private void OnClick_Card()
+    {
+        if (IsEmpty)
+        {
+            return;
+        }
+
+            OnCardSelect?.Invoke(this);
     }
 
     public void SetItem(ItemData item) //아이템 세팅 
@@ -58,5 +83,6 @@ public class SpawnCardSlot : MonoBehaviour
         Image_Icon.sprite = null;
         Image_Icon.enabled = false;
         Text_Name.text = "";
+        Text_Tier.text = "";
     }
 }

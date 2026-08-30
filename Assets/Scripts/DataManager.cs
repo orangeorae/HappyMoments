@@ -20,6 +20,7 @@ public class DataManager : MonoBehaviour
     }
 
     public Dictionary<string, ItemData> ItemDataList { get; private set; } = new Dictionary<string, ItemData>();
+    public Dictionary<string, MonsterData> MonsterDataList { get; private set; } = new Dictionary<string, MonsterData>();
 
     private Dictionary<string, T> LoadData<T>(string tableName) where T : GameDataBase
     {
@@ -65,12 +66,25 @@ public class DataManager : MonoBehaviour
         ItemDataList = LoadData<ItemData>(jsonPath);
     }
 
+    public void LoadMonsterData(string jsonPath)
+    {
+        MonsterDataList = LoadData<MonsterData>(jsonPath);
+    }
+
     public ItemData GetItemData(string id) // TryGetValue를 통해  Dictionary에서  안전 + 빠르게 데이터 추출
     {
         if (ItemDataList == null || string.IsNullOrEmpty(id)) return null;
 
         return ItemDataList.TryGetValue(id, out var data) ? data : null;
     }
+
+    public MonsterData GetMonsterData(string id) // TryGetValue를 통해  Dictionary에서  안전 + 빠르게 데이터 추출
+    {
+        if (MonsterDataList == null || string.IsNullOrEmpty(id)) return null;
+
+        return MonsterDataList.TryGetValue(id, out var data) ? data : null;
+    }
+
 
     //현제 스테이지 아이템들만 골라내기 위함 
     public List<ItemData> GetItemByStage(int stage)
@@ -89,6 +103,28 @@ public class DataManager : MonoBehaviour
             if(item.Stage == stage)
             {
                 resultList.Add(item);
+            }
+        }
+
+        return resultList;
+    }
+
+    public List<MonsterData> GetMonsterByStage(int stage, int wave)
+    {
+        List<MonsterData> resultList = new List<MonsterData>();
+
+        if (MonsterDataList == null)
+        {
+            return resultList;
+        }
+
+        foreach (KeyValuePair<string, MonsterData> pair in MonsterDataList)
+        {
+            MonsterData monster = pair.Value;
+
+            if (monster.Stage == stage && monster.Wave <= wave)
+            {
+                resultList.Add(monster);
             }
         }
 

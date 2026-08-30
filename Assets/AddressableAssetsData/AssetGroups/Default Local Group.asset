@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: acc717e1778163d4ab66f506dad89432
   m_SerializeEntries:
+  - m_GUID: 195c5de93df53b9479c94adfea60ff3e
+    m_Address: Monster_Adult
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2e231d9da8954be45a5220df6b12e4d2
     m_Address: icon_bike
     m_ReadOnly: 0

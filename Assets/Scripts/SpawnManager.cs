@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Transform _slotContainer; // 카드들이 놓일 부모 오브젝트
     [SerializeField] private int _slotCount = 4; // 카드 최대 수 
 
-   private int _currentStage = 0;
+    private int _currentStage = 1;
 
 
     [Header("소환 버튼")]
@@ -18,8 +18,14 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int _spawnCost = 10; //소환 비용
     [SerializeField] private int _currentMoney = 100; //임시로 관리 나중에 별도로 분리
 
-    [Header("필드 소환")]
+    [Header("필드 소환(아이템)")]
     [SerializeField] private SpawnModel spawnModel;  // 카드를 선택했을 때 실제 3D 모델을 배치해주는 스크립트
+
+    [Header("필드 소환(몬스터)")]
+    [SerializeField] private SpawnMonster _spawnMonster;
+    [SerializeField] private float _spawnMonsterSecond = 3f; // 몬스터 나오는 시간 간격
+
+
 
     //화면에 떠있는 카드 슬롯 저장리스트
     private List<SpawnCardSlot> _slots = new List<SpawnCardSlot>(); 
@@ -29,17 +35,33 @@ public class SpawnManager : MonoBehaviour
 
     private SpawnCardSlot selectSlot; //선택된 슬롯
 
+    private int _currentWave;
+
+    private List<MonsterData> _currentMonsters = new List<MonsterData>();
+
+    private int _currentMonsterIndex;
+
+    private float _monsterSpawnTimer; // 다음 몬스토 소환까지 남은 시간을 재기 위함   
+
+    private bool _isBossSpawned;
+
     private void OnEnable()
     {
         Button_Spawn.onClick.AddListener(OnClick_SpawnButton);
-        StageManager.Instance.OnStageChanged += HandleStageChanged;
     }
 
     private void OnDisable()
     {
-        Button_Spawn.onClick.RemoveAllListeners();
+        if (Button_Spawn != null)
+        {
+            Button_Spawn.onClick.RemoveAllListeners();
+        }
 
-        StageManager.Instance.OnStageChanged -= HandleStageChanged;
+        if (StageManager.Instance != null)
+        {
+            StageManager.Instance.OnStageChanged -= HandleStageChanged;
+            StageManager.Instance.OnWaveChanged -= HandleWaveChanged;
+        }
 
         foreach (SpawnCardSlot slot in _slots)
         {
@@ -56,17 +78,30 @@ public class SpawnManager : MonoBehaviour
     {
         CreateSlots();
 
-        // 시작할 때 StageManager가 갖고있는 현재 스테이지 값으로 먼저 맞춰줌
+        StageManager.Instance.OnStageChanged += HandleStageChanged;
+        StageManager.Instance.OnWaveChanged += HandleWaveChanged;
+
+        // 시작할 때 StageManager가 갖고있는 현재 스테이지 값으로 맞춰줌
         _currentStage = StageManager.Instance.CurrentStage;
-
-        //지금 시기에 맞는 아이템 가져오기 
-        _currentItems = DataManager.Instance.GetItemByStage(_currentStage);
+        _currentWave = StageManager.Instance.CurrentWave;
 
 
-        for(int i =0; i< _slots.Count; i++) // 슬롯을 랜덤 아이템으로 채우기 
+        RefreshCard();
+        RefreshMonsterList();
+    }
+
+    private void Update()
+    {
+        if(_currentWave == 3 && _isBossSpawned)
         {
-            ItemData randomItem = GetRandomItem(); //아이템 하나 뽑기
-            _slots[i].SetItem(randomItem); // 순차적으로 슬롯에 아이템 보여주기 
+            return;
+        }
+
+        _monsterSpawnTimer -= Time.deltaTime;
+
+        if (_monsterSpawnTimer <= 0f)
+        {
+            SpawnNextMonster();
         }
     }
 
@@ -80,6 +115,31 @@ public class SpawnManager : MonoBehaviour
 
             cardSlot.OnCardSelect += OnClick_CardSlot;
         }
+    }
+
+    //스테이지가 바뀌었을 때 뽑을 수 있는 아이템 새로고침
+    private void RefreshCard()
+    {
+        _currentItems = DataManager.Instance.GetItemByStage(_currentStage);
+        selectSlot = null;
+
+
+        if (_currentItems == null || _currentItems.Count == 0) 
+        {
+            foreach (SpawnCardSlot slot in _slots) 
+            {
+                slot.Clear();
+            }
+
+            return;
+        }
+
+        foreach (SpawnCardSlot slot in _slots)
+        {
+            ItemData randomItem = GetRandomItem();
+            slot.SetItem(randomItem);
+        }
+
     }
 
     private ItemData GetRandomItem() // 확률에 맞는 아이템 구하기
@@ -160,8 +220,81 @@ public class SpawnManager : MonoBehaviour
     private void HandleStageChanged(int newStage)
     {
         _currentStage = newStage;
-        _currentItems = DataManager.Instance.GetItemByStage(_currentStage);
+        RefreshCard();
+
+        _currentWave = StageManager.Instance.CurrentWave;
+        RefreshMonsterList();
 
         Debug.Log($"[SpawnManager] 스테이지 {_currentStage}로 갱신 -> 아이템 목록 재설정");
     }
+
+    private void HandleWaveChanged(int newWave)
+    {
+        _currentWave = newWave;
+        RefreshMonsterList();
+
+        Debug.Log($"[SpawnManager] 웨이브 {_currentWave}로 갱신");
+    }
+
+    private void RefreshMonsterList() // 현재 스테이지와 웨이브에 맞는 몬스터 세팅
+    {
+        _currentMonsters = DataManager.Instance.GetMonsterByStage(_currentStage, _currentWave);
+        _currentMonsterIndex = 0;
+        _isBossSpawned = false;
+        _monsterSpawnTimer = 0f;
+    }
+
+    private void SpawnNextMonster() //소환 지시 
+    {
+        if(_currentMonsters == null || _currentMonsters.Count == 0)
+        {
+            return;
+        }
+
+        MonsterData nextMonster = GetNextMonsterData();
+           
+        if( nextMonster == null)
+        {
+                return;
+        }
+
+            bool hasSpawn = _spawnMonster.SpawnMonsterInstance(nextMonster);    
+
+            if(hasSpawn == false)
+            {
+                Debug.Log("[SpawnManager]몬스터 소환 실패");
+                return;
+            }
+
+            _monsterSpawnTimer = _spawnMonsterSecond;
+        }
+
+     private MonsterData GetNextMonsterData() // 소환될 몬스터 뽑아주기 
+    {
+        
+            if (_currentWave == 3)
+            {
+                foreach (MonsterData monsterData in _currentMonsters)
+                {
+                    if (monsterData.Tier == "3")
+                    {
+                        _isBossSpawned = true;
+                        return monsterData;
+                    }
+                }
+
+                return null;
+            }
+
+            MonsterData result = _currentMonsters[_currentMonsterIndex];
+
+            _currentMonsterIndex++;
+
+            if (_currentMonsterIndex >= _currentMonsters.Count)
+            {
+                _currentMonsterIndex = 0;
+            }
+
+            return result;
+     }
 }

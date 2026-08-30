@@ -3,48 +3,103 @@ using UnityEngine;
 
 public class StageManager : SingletonBase<StageManager>
 {
-    [Header("스테이지 설정")] // 각 스테이지가 시작 되는 시간을 0초 60초 150초
-    [SerializeField] private float[] _stageStartTimes = { 0f, 60f, 150f };
+    private const float Wave1TimeLimit = 30f;
+    private const float Wave2TimeLimit = 45f;
+    private const float BossWaveTImeLimit = 60f;
+    private const int LastStage = 4;
 
-    private int _currentStage = 0;
+    private int _currentStage = 1;
+    private int _currentWave = 1;
+    private float _lastSpendTime;
+    private float _waveStartTime;
+    private bool _isGameEnd;
 
-    public int CurrentStage
-    {
-        get { return _currentStage; }
-    }
+    public int CurrentStage { get { return _currentStage; } }
+    public int CurrentWave { get { return _currentWave; } }
 
     public event Action<int> OnStageChanged;
+    public event Action<int> OnWaveChanged;
+    public event Action OnBossTimeOver;
 
-    private void OnEnable()
+    private void Start()
     {
         TimeManager.Instance.OnTimeChanged += HandleTimeChanged;
     }
 
     private void OnDisable()
     {
-        TimeManager.Instance.OnTimeChanged -= HandleTimeChanged;
+        if (TimeManager.Instance != null)
+        {
+            TimeManager.Instance.OnTimeChanged -= HandleTimeChanged;
+        }
     }
 
     private void HandleTimeChanged(float elapsedTIme)
     {
-        int nextStage = _currentStage;
-
-
-        // 프레임 드랍등으로 인해 오류가 생길 것을 방지하기 위해 
-        // 추후 스테이지가 더 많아지면 수정할 것
-        for (int i = 0; i < _stageStartTimes.Length; i++) //지금 시간 기준으로 도달 가능한 가장 높은 스테이지 찾기
+        if (_isGameEnd)
         {
-            if (elapsedTIme >= _stageStartTimes[i])
+            return;
+        }
+
+        _lastSpendTime = elapsedTIme;
+        float waveTime = _lastSpendTime - _waveStartTime;
+
+        if (_currentWave == 1 && waveTime >= Wave1TimeLimit)
+        {
+            MoveNextWave();
+        }
+
+        else if (_currentWave == 2 && waveTime >= Wave2TimeLimit)
+        {
+            MoveNextWave();
+        }
+
+        else if (_currentWave ==3 && waveTime >= BossWaveTImeLimit)
+        {
+            _isGameEnd = true;
+            Debug.Log("[StageManager] 보스 제한 시간 초과");
+
+            if(OnBossTimeOver != null)
             {
-                nextStage = i;
+                OnBossTimeOver();
             }
         }
+    }
+    private void MoveNextWave()
+    {
+        _currentWave++;
+        _waveStartTime = _lastSpendTime;
 
-        if (nextStage != _currentStage)
+        if(OnWaveChanged != null)
         {
-            _currentStage = nextStage;
-            Debug.Log($"[StageManager] 스테이지 {_currentStage}로 변경 (경과시간: {elapsedTIme}초");
-            OnStageChanged?.Invoke(_currentStage);
+            OnWaveChanged(_currentWave);
         }
+
+        Debug.Log("[StageManager] Stage " + _currentStage + " Wave " + _currentWave);
+    }
+
+    public void BossDefeated()
+    {
+        if(_isGameEnd || _currentWave!= 3)
+        {
+            return;
+        }
+
+        if(_currentStage >= LastStage)
+        {
+            _isGameEnd = true;
+            Debug.Log("[StageManager] 모든 Stage 완료");
+            return;
+        }
+
+        _currentStage++;
+        _currentWave = 1;
+        _waveStartTime = _lastSpendTime;
+
+        if(OnStageChanged != null)
+        {
+            OnStageChanged(_currentStage);
+        }
+        Debug.Log("[StageManager] Stage " + _currentStage + " Wave 1");
     }
 }

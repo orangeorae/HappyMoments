@@ -41,7 +41,7 @@
     "Probability": 5,
     "IconPath": "icon_bike",
     "ModelPath": "model_bike",
-    "ModelScale": 0.05
+    "ModelScale": 0.008
   },
   {
     "Id": "5",

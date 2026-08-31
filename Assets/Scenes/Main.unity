@@ -1282,7 +1282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d881dfa468f73b74dab0b40e5dea90af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core
-  _maxHealth: 100
+  _maxHealth: 1000
   _hpSlider: {fileID: 98418438}
 --- !u!1 &874964765
 GameObject:
@@ -5093,7 +5093,6 @@ Transform:
   m_Children:
   - {fileID: 1328876596}
   - {fileID: 1112085232}
-  - {fileID: 1709676524}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1604656354
@@ -5373,7 +5372,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1571767773}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1715774130
 GameObject:
@@ -5775,4 +5774,5 @@ SceneRoots:
   - {fileID: 2048479891}
   - {fileID: 2138192939}
   - {fileID: 1571767773}
+  - {fileID: 1709676524}
   - {fileID: 1262226609}

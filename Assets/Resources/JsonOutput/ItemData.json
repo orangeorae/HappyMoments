@@ -8,7 +8,10 @@
     "Probability": 700,
     "IconPath": "icon_bottle",
     "ModelPath": "model_bottle",
-    "ModelScale": 0.05
+    "ModelScale": 0.05,
+    "Damage": 20,
+    "AttackRange": 8,
+    "AttackSpeed": 2
   },
   {
     "Id": "2",
@@ -19,7 +22,10 @@
     "Probability": 250,
     "IconPath": "icon_shoes",
     "ModelPath": "model_shoes",
-    "ModelScale": 500
+    "ModelScale": 500,
+    "Damage": 20,
+    "AttackRange": 8,
+    "AttackSpeed": 2
   },
   {
     "Id": "3",
@@ -30,7 +36,10 @@
     "Probability": 45,
     "IconPath": "icon_friend",
     "ModelPath": "model_friend",
-    "ModelScale": 2
+    "ModelScale": 2,
+    "Damage": 20,
+    "AttackRange": 8,
+    "AttackSpeed": 2
   },
   {
     "Id": "4",
@@ -41,7 +50,10 @@
     "Probability": 5,
     "IconPath": "icon_bike",
     "ModelPath": "model_bike",
-    "ModelScale": 0.008
+    "ModelScale": 0.008,
+    "Damage": 20,
+    "AttackRange": 8,
+    "AttackSpeed": 2
   },
   {
     "Id": "5",
@@ -52,7 +64,10 @@
     "Probability": null,
     "IconPath": null,
     "ModelPath": null,
-    "ModelScale": null
+    "ModelScale": null,
+    "Damage": null,
+    "AttackRange": null,
+    "AttackSpeed": null
   },
   {
     "Id": "6",
@@ -63,7 +78,10 @@
     "Probability": null,
     "IconPath": null,
     "ModelPath": null,
-    "ModelScale": null
+    "ModelScale": null,
+    "Damage": null,
+    "AttackRange": null,
+    "AttackSpeed": null
   },
   {
     "Id": "7",
@@ -74,7 +92,10 @@
     "Probability": null,
     "IconPath": null,
     "ModelPath": null,
-    "ModelScale": null
+    "ModelScale": null,
+    "Damage": null,
+    "AttackRange": null,
+    "AttackSpeed": null
   },
   {
     "Id": "8",
@@ -85,7 +106,10 @@
     "Probability": null,
     "IconPath": null,
     "ModelPath": null,
-    "ModelScale": null
+    "ModelScale": null,
+    "Damage": null,
+    "AttackRange": null,
+    "AttackSpeed": null
   },
   {
     "Id": "9",
@@ -96,7 +120,10 @@
     "Probability": null,
     "IconPath": null,
     "ModelPath": null,
-    "ModelScale": null
+    "ModelScale": null,
+    "Damage": null,
+    "AttackRange": null,
+    "AttackSpeed": null
   },
   {
     "Id": "10",
@@ -107,6 +134,9 @@
     "Probability": null,
     "IconPath": null,
     "ModelPath": null,
-    "ModelScale": null
+    "ModelScale": null,
+    "Damage": null,
+    "AttackRange": null,
+    "AttackSpeed": null
   }
 ]

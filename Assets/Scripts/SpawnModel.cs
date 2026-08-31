@@ -18,6 +18,9 @@ public class SpawnModel : MonoBehaviour
 
     private float _loadingModelScale;
 
+    private ItemData _loadingItemData;
+    
+
     private void Awake()
     {
         isUseSeat = new bool[spawnPoint.Length]; 
@@ -40,7 +43,7 @@ public class SpawnModel : MonoBehaviour
         
         _loadingSpawnPoint = selectSpawnPoint;
         _loadingModelScale = item.ModelScale;
-
+        _loadingItemData = item;
         Addressables.InstantiateAsync(item.ModelPath).Completed +=OnModelSpawnData; // 비동기 로드 후 모델에 위치 크기 적용
 
         return true;
@@ -70,6 +73,15 @@ public class SpawnModel : MonoBehaviour
 
             //모델을 그루터기 자식으로 넣기 위함 (true를 넘기면 지금 위치, 회전값을 그대로 유지한 채 부모만 바뀌도록)
             spawnModel.transform.SetParent(selectSpawnPoint.transform, true);
+
+            ItemAttack itemAttack = spawnModel.GetComponent<ItemAttack>();
+
+            if (itemAttack == null) 
+            {
+                itemAttack = spawnModel.AddComponent<ItemAttack>();
+            }
+
+            itemAttack.ItemAttackInit(_loadingItemData);
         }
     }
     

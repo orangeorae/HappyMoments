@@ -19,6 +19,10 @@ public class ItemData : GameDataBase //아이템 세부 기획 데이터 클래�
     public string ModelPath;
     public float ModelScale;
 
+    public int Damage;
+    public float AttackRange;
+    public float AttackSpeed;
+
 }
 
 [System.Serializable]

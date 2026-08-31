@@ -6,10 +6,10 @@
     "Wave": 1,
     "Tier": "1",
     "Name": "낯선 어른",
-    "Health": 100,
+    "Health": 30,
     "Attack": 10,
     "Speed": 10,
-    "AttackSpeed": 10,
+    "AttackSpeed": 5,
     "ModelPath": "Monster_Adult"
   },
   {

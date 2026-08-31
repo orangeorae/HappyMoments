@@ -30,9 +30,9 @@ public class MonsterData : GameDataBase //몬스터 세부 기획 데이터 클�
     public string Tier;
     public string Name;
     public int Health;
-    public float Attack;
+    public int Attack;
     public float Speed;
-    public float ModAttackSpeed;
+    public float AttackSpeed;
     public string ModelPath;
 
 }

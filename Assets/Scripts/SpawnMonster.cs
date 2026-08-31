@@ -36,16 +36,26 @@ public class SpawnMonster : MonoBehaviour
             return;
         }
 
+
+
         GameObject monsterObject = handle.Result;
 
         MonsterMove monsterMove = monsterObject.GetComponent<MonsterMove>();
+        MonsterAttack monsterAttack = monsterObject.GetComponent<MonsterAttack>();
 
         if (monsterMove == null)
         {
             monsterMove = monsterObject.AddComponent<MonsterMove>();
         }
+
+        if (monsterAttack == null)
+        {
+            monsterAttack = monsterObject.AddComponent<MonsterAttack>();
+        }
         //몬스터 초기 정보 설정
         monsterMove.MonsterMoveInit(_loadingMonsterData, CirclePath.Instance, _loadingStartAngle);
+
+        monsterAttack.MonsterAttackInit(_loadingMonsterData);
 
     }
 }
